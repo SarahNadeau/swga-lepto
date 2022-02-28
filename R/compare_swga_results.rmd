@@ -1,0 +1,133 @@
+---
+title: "Compare SWGA results at various levels of FastA downsampling"
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(gsubfn)
+```
+Load primer results
+```{r}
+primer_filepaths <- list.files(
+  path = "swga_results",
+  pattern = "primers_top_100_gini.txt",
+  recursive = T,
+  full.names = T
+)
+
+primer_results <- list()
+for (filepath in primer_filepaths) {
+  n_rows_downsample <- gsub(
+    x = gsub(
+            x = filepath,
+            pattern = "swga_results/lepto_human_downsample",
+            replacement = ""
+        ),
+    pattern = "/swga/primers_top_100_gini.txt",
+    replacement = ""
+  )
+  result = read.delim(file = filepath)
+  primer_results[n_rows_downsample] = list(result$seq)
+}
+```
+Load run trace results
+```{r}
+trace_filepaths <- list.files(
+        path = "swga_results",
+        pattern = "trace.*.txt",
+        recursive = T,
+        full.names = T
+)
+
+is_first <- T
+for (filepath in trace_filepaths) {
+  n_rows_downsample <- gsub(
+          x = gsub(
+                  x = filepath,
+                  pattern = "swga_results/lepto_human_downsample",
+                  replacement = ""
+          ),
+          pattern = "/trace.*.txt$",
+          replacement = ""
+  )
+  result = read.delim(file = filepath, check.names = F) %>%
+          filter(name == "RUN_SWGA (1)") %>%
+          mutate(n_rows_downsample = as.integer(n_rows_downsample))
+  if (is_first) {
+    trace_results <- result
+    is_first <- F
+  } else {
+    trace_results <- rbind(trace_results, result)
+  }
+}
+```
+Summarize primer results - converging to stable primer set?
+```{r}
+primer_result_summary <- data.frame(
+  n_rows_downsample = c(),
+  n_new_primers = c()
+)
+
+primers_found <- c()
+for (n_rows_downsample in sort(as.integer(names(primer_results)))) {
+  new_primers <- setdiff(primer_results[[as.character(n_rows_downsample)]], primers_found)
+  primer_result_summary <- rbind(
+          primer_result_summary,
+    list(
+        n_rows_downsample = n_rows_downsample,
+        n_new_primers = length(new_primers)
+    )
+  )
+  primers_found <- c(primers_found, new_primers)
+}
+
+ggplot(
+  data = primer_result_summary,
+  aes(x = n_rows_downsample, y = n_new_primers)
+) +
+  geom_point() +
+  lims(y = c(0, NA))
+
+ggsave(
+  filename = "figures/primers_vs_n_rows_fasta_analyzed.png",
+  height = 4,
+  width = 4,
+  units = "in"
+)
+```
+Summarize trace results - how does memory and time needed grow with length of FastA analyzed?
+```{r}
+# Thanks https://stackoverflow.com/questions/37019186/r-convert-text-duration-d-h-m-s-into-seconds
+trace_results_long <- trace_results %>%
+  mutate(
+    realtime_exp = gsubfn(
+            pattern = "[a-z]",
+            list(d="*24*60*60", h = "*60*60", m = "*60", s="*1"),
+            gsub("\\s+", "+", realtime)),
+    realtime_sec = unname(sapply(realtime_exp, function(x) eval(parse(text=x)))),
+    vmem_exp = gsubfn(
+            pattern = "[A-Z]B",
+            list(GB="*1000", MB = "*1", B = "/1000"),
+            gsub("\\s+", "", vmem)),
+    vmem_mb = unname(sapply(vmem_exp, function(x) eval(parse(text=x))))
+  ) %>%
+  pivot_longer(cols = c(vmem_mb, realtime_sec), names_to = "resource")
+
+ggplot(
+        data = trace_results_long,
+        aes(x = n_rows_downsample, y = value)
+) +
+  facet_grid(. ~ resource) +
+  geom_point()
+
+ggsave(
+  filename = "figures/resources_vs_n_rows_fasta_analyzed.png",
+  height = 4,
+  width = 4,
+  units = "in"
+)
+```
+
