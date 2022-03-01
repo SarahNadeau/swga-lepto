@@ -93,7 +93,7 @@ ggplot(
   scale_x_log10()
 
 ggsave(
-  filename = "figures/primers_vs_n_rows_fasta_analyzed.png",
+  filename = "figures/primers_vs_n_chunks_fasta_analyzed.png",
   height = 4,
   width = 4,
   units = "in"
@@ -126,7 +126,7 @@ ggplot(
   scale_x_log10()
 
 ggsave(
-  filename = "figures/resources_vs_n_rows_fasta_analyzed.png",
+  filename = "figures/resources_vs_n_chunks_fasta_analyzed.png",
   height = 4,
   width = 4,
   units = "in"
