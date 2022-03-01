@@ -2,8 +2,9 @@
 #$ -M svu7@cdc.gov
 #$ -m ae
 
-N_LINES=$1
-echo "Number of lines used: $N_LINES"
+N_CHUNKS=$1
+CHUNK_SIZE=80  # number of lines in a row of the FastA file
+echo "$N_CHUNKS chunks of lenth $CHUNK_SIZE used"
 
 module load nextflow
 
@@ -14,4 +15,7 @@ nextflow run \
 	--outpath $HOME/lepto_swga/swga_results/lepto_human_downsample${N_LINES} \
 	--target $HOME/lepto_swga/target_lepto.fasta \
 	--background $HOME/lepto_swga/background_human.fasta \
-	--downsample $N_LINES
+	--target-chunk-size $CHUNK_SIZE \
+	--backgr-chunk-size $CHUNK_SIZE \
+	--target-n-chunks $N_CHUNKS \
+	--backgr-n-chunks $N_CHUNKS
