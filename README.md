@@ -23,7 +23,7 @@ for n in 10 100 1000 10000 100000 1000000 5000000; do
     qsub swga-lepto/bash/run_swga_lepto_human_downsample.sh $n
 done
 ```
-*Requires FastA to have one entry and be multi-line, unit of down-sampling is a line in the FastA file
+*Unit of down-sampling is 80bp chunks
 
 Compress .txt results (trace, primers) from swga for download, including directory structure: 
 ```
