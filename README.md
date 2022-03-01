@@ -7,10 +7,10 @@ It uses the [swga](https://github.com/eclarke/swga) tool implemented in https://
 Get data
 ```
 mkdir $HOME/lepto_swga
-wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/858/895/GCF_014858895.1_ASM1485889v1/GCF_014858895.1_ASM1485889v1_genomic.fna.gz -O $HOME/lepto_swga/target_lepto.fasta.gz
-wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.29_GRCh38.p14/GCA_000001405.29_GRCh38.p14_genomic.fna.gz -O $HOME/lepto_swga/background_human.fasta.gz
-wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/015/227/675/GCF_015227675.2_mRatBN7.2/GCF_015227675.2_mRatBN7.2_genomic.fna.gz -O $HOME/lepto_swga/background_norway_rat.fasta.gz
-gunzip $HOME/lepto_swga/*.gz
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/014/858/895/GCF_014858895.1_ASM1485889v1/GCF_014858895.1_ASM1485889v1_genomic.fna.gz -O $HOME/swga-lepto/target_lepto.fasta.gz
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.29_GRCh38.p14/GCA_000001405.29_GRCh38.p14_genomic.fna.gz -O $HOME/swga-lepto/background_human.fasta.gz
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/015/227/675/GCF_015227675.2_mRatBN7.2/GCF_015227675.2_mRatBN7.2_genomic.fna.gz -O $HOME/swga-lepto/background_norway_rat.fasta.gz
+gunzip $HOME/swga-lepto/*.gz
 ```
 
 Run swga with various levels of down-sampling* for lepto/human on Aspen:
@@ -24,5 +24,5 @@ done
 
 Compress .txt results (trace, primers) from swga for download, including directory structure: 
 ```
-find ./<results_dir> -name "*.txt" | tar -cf swga_results.tar -T -
+find $HOME/swga-lepto/swga_results -name "*.txt" | tar -cf swga_results.tar -T -
 ```
