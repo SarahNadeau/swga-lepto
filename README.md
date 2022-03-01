@@ -16,8 +16,8 @@ gunzip $HOME/lepto_swga/*.gz
 Run swga with various levels of down-sampling* for lepto/human on Aspen:
 ``` 
 git clone git@github.com:SarahNadeau/swga-lepto.git
-for d in 100000 1000000 50000000; do 
-    qsub swga-lepto/bash/run_swga_lepto_human_downsample.sh $d
+for n in 1 13 125 1250 12500 62500; do 
+    qsub swga-lepto/bash/run_swga_lepto_human_downsample.sh $n
 done
 ```
 *Requires FastA to have one entry and be multi-line, unit of down-sampling is a line in the FastA file
