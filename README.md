@@ -16,7 +16,7 @@ gunzip $HOME/lepto_swga/*.gz
 Run swga with various levels of down-sampling* for lepto/human on Aspen:
 ``` 
 git clone git@github.com:SarahNadeau/swga-lepto.git
-for n in 1 13 125 1250 12500 62500; do 
+for n in 10 100 1000 10000 100000 1000000 5000000; do 
     qsub swga-lepto/bash/run_swga_lepto_human_downsample.sh $n
 done
 ```

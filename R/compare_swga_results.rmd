@@ -89,7 +89,8 @@ ggplot(
   aes(x = n_rows_downsample, y = n_new_primers)
 ) +
   geom_point() +
-  lims(y = c(0, NA))
+  lims(y = c(0, NA)) +
+  scale_x_log10()
 
 ggsave(
   filename = "figures/primers_vs_n_rows_fasta_analyzed.png",
@@ -121,7 +122,8 @@ ggplot(
         aes(x = n_rows_downsample, y = value)
 ) +
   facet_grid(. ~ resource) +
-  geom_point()
+  geom_point() +
+  scale_x_log10()
 
 ggsave(
   filename = "figures/resources_vs_n_rows_fasta_analyzed.png",

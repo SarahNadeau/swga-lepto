@@ -1,0 +1,4 @@
+task_id	name	status	exit	realtime	%cpu	%mem	rss	vmem	peak_rss	peak_vmem	rchar	wchar
+1	INFILE_HANDLING (1)	COMPLETED	0	23.2s	76.3%	0.0%	3 MB	229.5 MB	3 MB	229.5 MB	6.2 GB	6.2 GB
+2	DOWNSAMPLE_GENOMES (1)	COMPLETED	0	635ms	81.0%	0.0%	1.5 MB	110.6 MB	1.5 MB	110.6 MB	82 MB	82 MB
+3	RUN_SWGA (1)	COMPLETED	0	5m 35s	90.3%	1.5%	1.9 GB	2.6 GB	2 GB	2.7 GB	13.6 GB	5.7 GB

@@ -1,0 +1,123 @@
+[2022-Feb-28 Mon 12:02:50] INFO: removed any blank lines in input
+[2022-Feb-28 Mon 12:02:50] INFO: Down-sampling target and background genomes to first 100000 lines
+
+swga v0.4.4 - interactive setup
+-------------------------------
+This will set up a new swga workspace in the current directory (/scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga).
+
+Checking /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/target.fasta.downsampled...
+Foreground filepath: /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/target.fasta.downsampled
+  Length:  4946384 bp
+  Records: 4
+
+Checking /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/background.fasta.downsampled...
+Background filepath: /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/background.fasta.downsampled
+  Length:  8099919 bp
+
+Exclusionary sequences file: /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/dummy.fasta
+Done!
+
+Created pre-filled config file `/scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/parameters.cfg'. Workspace data: `/scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/swga.db'
+
+This file has been pre-filled with reasonable defaults. However, you will
+probably want to modify them to suit your needs. You can override the values
+in this file both by passing arguments to each command or by modifying this
+file in a plain-text editor such as TextEdit or `nano'.
+--------------------
+
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197740735 MB
+
+Saved 512 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197739124 MB
+
+Saved 512 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197739124 MB
+
+Saved 0 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197739124 MB
+
+Saved 2080 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197737744 MB
+
+Saved 2080 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197733029 MB
+
+Saved 0 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197733029 MB
+
+Saved 8192 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197728088 MB
+
+Saved 8192 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197723934 MB
+
+Saved 0 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197723934 MB
+
+Saved 32892 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197723653 MB
+
+Saved 32894 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197720224 MB
+
+Saved 0 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197720224 MB
+
+Saved 130147 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197718611 MB
+
+Saved 130412 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197714250 MB
+
+Saved 0 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197714250 MB
+
+Saved 466844 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197714445 MB
+
+Saved 487497 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197713338 MB
+
+Saved 0 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197712877 MB
+
+Saved 1243182 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197712946 MB
+
+Saved 1490402 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197711766 MB
+
+Saved 0 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197711456 MB
+
+Saved 2342040 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197708767 MB
+
+Saved 3218964 solid kmers
+Total RAM: 191860 MB
+Available disk space in /scicomp/home-pure/svu7/work/0e/a3dd3c49c738df77a91d47e8c364c0/swga/.swga_tmp: 197705800 MB
+
+Saved 0 solid kmers
