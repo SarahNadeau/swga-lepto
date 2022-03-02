@@ -24,6 +24,12 @@ for n in 10 100 1000 10000 100000 1000000 5000000; do
 done
 ```
 *Unit of down-sampling is 80bp chunks
+Or run swga searching different numbers of total sets before reporting best found
+``` 
+for n in 10000 1000000 5000000; do 
+    qsub swga-lepto/bash/run_swga_lepto_human_whole_genome.sh $n
+done
+```
 
 Compress .txt results (trace, primers) from swga for download, including directory structure: 
 ```
