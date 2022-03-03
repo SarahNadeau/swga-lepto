@@ -25,15 +25,15 @@ done
 ```
 *Unit of down-sampling is 80bp chunks
 
-Run swga searching different numbers of total sets before reporting best found
-``` 
-for n in 10000 1000000 5000000; do 
-    qsub swga-lepto/bash/run_swga_lepto_human_whole_genome.sh $n
-done
-```
-Run swga with human and Norway rat background sequences down-sampled to a little less than half their combined lengths, search some small number of sets
+Run swga with human and Norway rat background sequences down-sampled to a little less than half their combined lengths, search some small number of sets.
+Used to assess resource usage and appropriate min/max binding frequency parameters.
 ```
 qsub swga-lepto/bash/run_swga_lepto_human_rat_downsample.sh
+```
+
+Run swga with chosen min/max binding frequencies on full human, Norway rat genomes and without limiting the number of sets to search.
+```
+qsub swga-lepto/bash/run_swga_lepto_human_rat.sh
 ```
 
 Compress .txt results (trace, primers) from swga for download, including directory structure: 
