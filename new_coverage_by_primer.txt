@@ -1,0 +1,4 @@
+"primer_consideration_order" "primer" "n_binding_sites" "assumed_extension" "n_new_sites_covered"
+1 "CGATCGTA" 371 10000 2315826
+2 "CGATTCCG" 412 10000 1064253
+3 "CGATTCGT" 272 10000 447432

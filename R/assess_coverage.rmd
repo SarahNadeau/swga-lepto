@@ -1,0 +1,80 @@
+---
+title: "Assess SWGA candidate primer set for genome coverage"
+output: html_notebook
+---
+
+```{r, setup}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+knitr::opts_knit$set(root.dir = '/Users/nadeau/Documents/CDC_ORISE/Projects/swga-lepto')
+```
+
+Load bedfile for each primer
+```{r}
+set_idx <- 9
+bed_dir <- "swga_results/lepto_human_no_downsample_fg_bind_rate0.00005_max_sets_search1000/set_bedfiles/target.fasta_export/"
+primer_bedfiles <- list.files(paste0(bed_dir, "set_", set_idx, "/"))
+primer_bedfiles <- primer_bedfiles[primer_bedfiles != "whole_set.bed"]
+
+is_first <- T
+for (bedfile in primer_bedfiles) {
+    bed <- read.delim(
+        file = paste0(bed_dir, "set_", set_idx, "/", bedfile),
+        skip = 1,
+        header = F,
+        col.names = c("ref", "primer_start", "primer_end"),
+        sep = ""
+    )
+    bed$primer_seq <- gsub(x = bedfile, pattern = ".bed", replacement = "")
+    if (is_first) {
+        primer_sites <- bed
+        is_first <- F
+    } else {
+        primer_sites <- rbind(primer_sites, bed)
+    }
+}
+```
+
+Report total number of (non-overlapping) sites covered per subsequent primer
+And get all the sites covered
+```{r}
+assumed_extension = 10000
+covered_sites <- c()
+primers <- unique(primer_sites$primer_seq)
+new_coverage_by_primer <- data.frame(
+  primer_consideration_order = 1:length(primers),
+  primer = primers,
+  n_binding_sites = NA,
+  assumed_extension = assumed_extension,
+  n_new_sites_covered = NA
+)
+
+sites_covered <- c()
+for (primer in primers) {
+  n_new_sites_covered <- 0
+  filtered_primer_sites <- primer_sites %>% filter(primer_seq == primer)
+  new_coverage_by_primer[[new_coverage_by_primer$primer == primer, "n_binding_sites"]] <- nrow(filtered_primer_sites)
+  for (i in 1:nrow(filtered_primer_sites)) {
+    start <- filtered_primer_sites[[i, "primer_start"]]
+    end <- filtered_primer_sites[[i, "primer_end"]]
+    sites_covered_i <- start:(end + assumed_extension)
+    n_new_sites_covered <- n_new_sites_covered + length(setdiff(sites_covered_i, sites_covered))
+    sites_covered <- union(sites_covered_i, sites_covered)
+  }
+  new_coverage_by_primer[[new_coverage_by_primer$primer == primer, "n_new_sites_covered"]] <- n_new_sites_covered
+}
+
+print(new_coverage_by_primer)
+print(paste("Total sites covered assuming touchdown at all",
+            sum(new_coverage_by_primer$n_binding_sites),
+            "sites and extension of",
+            assumed_extension,
+            "bp:",
+            length(sites_covered)))
+
+write.table(x = new_coverage_by_primer, file = paste0(getwd(), "/new_coverage_by_primer.txt"), row.names = F)
+```
+```{r}
+
+```
