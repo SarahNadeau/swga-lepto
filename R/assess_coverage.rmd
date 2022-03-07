@@ -12,8 +12,16 @@ knitr::opts_knit$set(root.dir = '/Users/nadeau/Documents/CDC_ORISE/Projects/swga
 
 Load bedfile for each primer
 ```{r}
-set_idx <- 9
-bed_dir <- "swga_results/lepto_human_no_downsample_fg_bind_rate0.00005_max_sets_search1000/set_bedfiles/target.fasta_export/"
+set_idx <- 6
+bed_dir <- paste(
+    "results",
+    "lepto_human_no_downsample_fg_bind_rate0.00005_max_sets_search1000",
+    "swga",
+    "set_bedfiles",
+    "target.fasta_export",
+    sep = "/"
+)
+outdir <- paste0(bed_dir, "/../../../")
 primer_bedfiles <- list.files(paste0(bed_dir, "set_", set_idx, "/"))
 primer_bedfiles <- primer_bedfiles[primer_bedfiles != "whole_set.bed"]
 
@@ -73,8 +81,55 @@ print(paste("Total sites covered assuming touchdown at all",
             "bp:",
             length(sites_covered)))
 
-write.table(x = new_coverage_by_primer, file = paste0(getwd(), "/new_coverage_by_primer.txt"), row.names = F)
+write.table(
+  x = new_coverage_by_primer,
+  file = paste0(
+    outdir, "/genome_coverage/set_", set_idx, "_new_coverage_by_primer", assumed_extension, ".txt"
+  ),
+  row.names = F)
 ```
-```{r}
 
+Get MLST loci covered
+```{r}
+scheme_1 <- c("glmU1", "pntA1", "sucA1", "tpiA1", "pfkB1", "mreA1", "caiB1")
+scheme_2 <- c("adk2", "glmU2", "icdA2", "lipL322", "lipL412", "mreA2", "pntA2")
+scheme_3 <- c("adk3", "icdA3", "lipL323", "lipL413", "rrs23", "secY3")
+mlst_info <- read.table(file = "target_lepto_mlst_site_info.txt", sep = "\t", header = T)
+
+mlst_info <- mlst_info %>% mutate(
+  assumed_extension = assumed_extension,
+  percent_covered = NA,
+  n_sites = NA,
+  mlst_scheme = case_when(
+    Locus %in% scheme_1 ~ "1",
+    Locus %in% scheme_2 ~ "2",
+    Locus %in% scheme_3 ~ "3",
+    grepl("LEPT", Locus) ~ "cgMLST",
+    T ~ "Other")
+)
+
+# How many MLST loci are completely covered?
+for (i in 1:nrow(mlst_info)) {
+  if (i %% 100 == 0) {
+    print(paste("Evaluating MLST loci", i))
+  }
+  start <- mlst_info[[i, "Start.position"]]
+  end <- mlst_info[[i, "End.position"]]
+  mlst_info[[i, "n_sites"]] <- end - start + 1
+  mlst_info[[i, "percent_covered"]] <- sum(start:end %in% sites_covered) / (end - start + 1)
+}
+
+print(sum(mlst_info$percent_covered == 1, na.rm = T)/nrow(mlst_info))
+
+ggplot(
+  data = mlst_info,
+  aes(x = percent_covered)) +
+  geom_histogram() +
+  facet_wrap(. ~ mlst_scheme, scales = "free_y")
+
+ggsave(
+    filename = paste0(
+        outdir, "/mlst_loci_coverage/set_", set_idx, "_assumed_extension_", assumed_extension, ".png"
+    )
+)
 ```
