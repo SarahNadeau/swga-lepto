@@ -10,6 +10,33 @@
 version = "1.0.0"
 nextflow.enable.dsl=2
 
+process RUN_DSK {
+    cpus 8
+    memory '64 GB'
+    publishDir "${params.outpath}", mode: "copy"
+    container "snads/dsk:0.0.100"
+
+    input:
+        path(infile)
+
+    output:
+        path("${params.k}mers.h5")
+        path("${params.k}mers.txt")
+
+    script:
+    """
+    dsk \
+        -nb-cores 8 \
+        -file ${params.infile} \
+        -kmer-size ${params.k} \
+        -out ${params.k}mers.h5
+
+    dsk2ascii \
+        -file ${params.k}mers.h5 \
+        -out ${params.k}mers.txt
+    """
+}
+
 /*
 ==============================================================================
                             Run the main workflow
@@ -24,31 +51,6 @@ workflow {
 
     infile = Channel.fromPath(params.infile, checkIfExists: true)
 
-    process RUN_DSK {
-        cpus 8
-        memory '64 GB'
-        publishDir "${params.outpath}", mode: "copy"
-        container "snads/dsk:0.0.100"
-
-        input:
-            path(infile)
-
-        output:
-            path("${params.k}mers.h5")
-            path("${params.k}mers.txt")
-
-        script:
-        """
-        dsk \
-            -nb-cores 8 \
-            -file ${params.infile} \
-            -kmer-size ${params.k} \
-            -out ${params.k}mers.h5
-
-        dsk2ascii \
-            -file ${params.k}mers.h5 \
-            -out ${params.k}mers.txt
-        """
-    }
+    RUN_DSK(infile)
 
 }
