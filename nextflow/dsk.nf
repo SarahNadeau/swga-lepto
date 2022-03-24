@@ -24,11 +24,9 @@ workflow {
 
     infile = Channel.fromPath(params.infile, checkIfExists: true)
 
-    process {
-        withName: RUN_DSK {
-            cpus = 8
-            memory = 64.GB
-        }
+    process RUN_DSK {
+        cpus 8
+        memory '64 GB'
         publishDir "${params.outpath}", mode: "copy"
         container "snads/dsk:0.0.100"
 
