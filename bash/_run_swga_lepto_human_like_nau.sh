@@ -31,5 +31,6 @@ nextflow run \
   --backgr_length $BACKGR_LEN \
   --target_length $TARGET_LEN \
   --max_sets_search 10000 \
+  --max_fg_bind_dist 70000 \
   --find_sets_min_size $N_PRIMERS \
   --find_sets_max_size $N_PRIMERS
