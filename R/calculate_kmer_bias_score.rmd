@@ -1,0 +1,121 @@
+---
+title: "Calculate primer bias score between Lepto genome and human genome"
+output: html_notebook
+---
+
+```{r}
+require(dplyr)
+require(tidyr)
+require(ggplot2)
+```
+Load data
+```{r}
+lepto_7mer_counts <- read.delim(
+    file = "results/dsk_lepto_human/dsk_lepto/7mers.txt",
+    sep = "",
+    header = F,
+    col.names = c("kmer", "count")
+)
+lepto_8mer_counts <- read.delim(
+  file = "results/dsk_lepto_human/dsk_lepto/8mers.txt",
+  sep = "",
+  header = F,
+  col.names = c("kmer", "count")
+)
+human_7mer_counts <- read.delim(
+  file = "results/dsk_lepto_human/dsk_human/7mers.txt",
+  sep = "",
+  header = F,
+  col.names = c("kmer", "count")
+)
+human_8mer_counts <- read.delim(
+  file = "results/dsk_lepto_human/dsk_human/8mers.txt",
+  sep = "",
+  header = F,
+  col.names = c("kmer", "count")
+)
+lepto_genome_length <- 4885316  # from output of DSK (bank_total_nt)
+human_genome_length <- 3298912062  # from output of DSK (bank_total_nt)
+```
+Calculate bias ratio
+```{r}
+merged_7mers <- merge(
+    x = lepto_7mer_counts,
+    y = human_7mer_counts,
+    suffixes = c("_lepto", "_human"),
+    by = "kmer",
+    all = T
+) %>% mutate(
+  bias_ratio = (count_lepto / lepto_genome_length) / (count_human / human_genome_length)
+) %>% arrange(desc(bias_ratio))
+
+merged_8mers <- merge(
+  x = lepto_8mer_counts,
+  y = human_8mer_counts,
+  suffixes = c("_lepto", "_human"),
+  by = "kmer",
+  all = T
+) %>% mutate(
+  bias_ratio = (count_lepto / lepto_genome_length) / (count_human / human_genome_length)
+) %>% arrange(desc(bias_ratio))
+```
+Export data for IDT OligoAnalyzer
+```{r}
+ordered_7mers_for_idt <- merged_7mers %>%
+  arrange(desc(bias_ratio)) %>%
+  mutate(name = paste0("kmer_", 1:n())) %>%
+  select(name, kmer)
+
+write.table(
+  file = "results/dsk_lepto_human/ordered_7mers_for_idt.txt",
+  x = ordered_7mers_for_idt,
+  row.names = F,
+  col.names = F,
+  sep = "\t",
+  quote = F
+)
+
+ordered_8mers_for_idt <- merged_8mers %>%
+  arrange(desc(bias_ratio)) %>%
+  mutate(name = paste0("kmer_", 1:n())) %>%
+  select(name, kmer)
+
+write.table(
+  file = "results/dsk_lepto_human/ordered_8mers_for_idt.txt",
+  x = ordered_8mers_for_idt,
+  row.names = F,
+  col.names = F,
+  sep = "\t",
+  quote = F
+)
+```
+Plot IDT-predicted melting temperatures
+```{r}
+idt_7mer_results <- read.delim(
+  file = "results/dsk_lepto_human/ordered_7mers_idt_results.csv",
+  sep = ","
+)
+idt_8mer_results <- read.delim(
+  file = "results/dsk_lepto_human/ordered_8mers_idt_results.csv",
+  sep = ","
+)
+merged_idt_results <- rbind(
+  idt_7mer_results,
+  idt_8mer_results
+)
+ggplot(
+  data = merged_idt_results,
+  aes(x = MeltTemp)
+) +
+  geom_histogram() +
+  facet_grid(Length ~ ., labeller = label_both) +
+  ggtitle("IDT-predicted melting temps\nfor top 100 bias score primers")
+
+ggsave(
+  filename = "results/dsk_lepto_human/melt_temp_comparison.png",
+  width = 4,
+  height = 5,
+  units = "in"
+)
+```
+

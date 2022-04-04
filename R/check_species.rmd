@@ -1,0 +1,59 @@
+---
+title: "Check RefSeq representative Lepto species match official taxonomy"
+output: html_notebook
+---
+
+```{r}
+library(tidyr)
+library(dplyr)
+```
+
+# Load data
+```{bash}
+for FILE in lepto_species_assemblies/ncbi-genomes-2022-03-09/*fna.gz; do
+    echo $FILE >> lepto_species_assemblies/assembly_file_names.txt
+    gunzip -c $FILE | head -1 >> lepto_species_assemblies/assembly_first_headers.txt
+done
+```
+
+```{r}
+species_info <- read.csv("lepto_species_info.csv") %>%
+  filter(
+    `Nomenclatural.status` == "validly published under the ICNP",
+    `Taxonomic.status` == "correct name"
+ )
+assembly_info <- read.delim(
+  "lepto_species_assemblies/assembly_first_headers.txt",
+  fill = T,
+  sep = " ",
+  header = F
+) %>% filter(V1 != "11-33")  # one line wraps
+
+assembly_filenames <- read.delim(
+  "lepto_species_assemblies/assembly_file_names.txt",
+  header = F
+)
+
+write.table(
+  x = data.frame(file_name = assembly_filenames$V1, species = assembly_info$V3),
+  file = "lepto_species_assemblies/file_name_to_species.txt",
+  row.names = F
+)
+
+get_species <- function(name) {
+  species <- strsplit(x = name, split = "\\s+")[[1]][2]
+  species <- gsub(x = species, pattern = "\"", replacement = "")
+  return(species)
+}
+species <- unlist(lapply(FUN = get_species, X = as.character(species_info$Name)))
+assembly_species <- assembly_info$V3
+
+print("only in assemblies:")
+print(setdiff(assembly_species, species))
+print("only in taxonomic list:")
+print(setdiff(species, assembly_species))
+
+# fluminis is "not validly published"
+# kobayashii is missing from RefSeq
+```
+
