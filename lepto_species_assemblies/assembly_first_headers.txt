@@ -1,0 +1,67 @@
+>NC_010602.1 Leptospira biflexa serovar Patoc strain 'Patoc 1 (Paris)' chromosome I, complete sequence
+>NZ_AHMM02000027.1 Leptospira inadai serovar Lyme str. 10 ctg1134736007938, whole genome shotgun sequence
+>NZ_AHMN02000024.1 Leptospira kirschneri serovar Cynopteri str. 3522 CT ctg1134731807556, whole genome shotgun sequence
+>NZ_AHMO02000012.1 Leptospira broomii serovar Hurstbridge str. 5399 ctg1134731807506, whole genome shotgun sequence
+>NZ_AKWZ02000013.1 Leptospira fainei serovar Hurstbridge str. BUT 6 ctg1134728687805, whole genome shotgun sequence
+>NZ_AKWY02000035.1 Leptospira noguchii serovar Panama str. CZ214 ctg1134732786308, whole genome shotgun sequence
+>NZ_CP024871.1 Leptospira mayottensis 200901116 chromosome I, complete sequence
+>NZ_CP006694.1 Leptospira santarosai serovar Shermani str. LT 821 chromosome I, complete sequence
+>NZ_AOGW02000023.1 Leptospira terpstrae serovar Hualin str. LT 11-33 = ATCC 700639 strain LT 11-33 ctg7180000024111, whole genome shotgun sequence
+>NZ_AOGZ02000025.1 Leptospira wolbachii serovar Codice str. CDC ctg1134731807523, whole genome shotgun sequence
+>NZ_JAGX01000001.1 Leptospira licerasiae ATCC BAA-1110 T343DRAFT_scaffold00001.1_C, whole genome shotgun sequence
+>NZ_JQRS01000001.1 Leptospira alstonii strain 56661 Contig001, whole genome shotgun sequence
+>NZ_CP015217.1 Leptospira tipperaryensis strain GWTS#1 chromosome 1, complete sequence
+>NZ_JQGW01000001.1 Leptospira alexanderi strain 56659 Contig001, whole genome shotgun sequence
+>NZ_CP020414.2 Leptospira interrogans serovar Copenhageni strain FDAARGOS_203 chromosome, complete genome
+>NZ_NFUP01000001.1 Leptospira venezuelensis strain CLM-R50 contig_0001, whole genome shotgun sequence
+>NZ_NPDN01000001.1 Leptospira hartskeerlii strain MCA1-C-A1 contig_1, whole genome shotgun sequence
+>NZ_NPDR01000001.1 Leptospira saintgironsiae strain FH4-C-A2 contig_1, whole genome shotgun sequence
+>NZ_NPDZ01000001.1 Leptospira perolatii strain FH1-B-B1 contig_1, whole genome shotgun sequence
+>NZ_NPDS01000001.1 Leptospira barantonii strain FH4-C-A1 contig_1, whole genome shotgun sequence
+>NZ_NPDX01000001.1 Leptospira harrisiae strain FH2-B-A1 contig_1, whole genome shotgun sequence
+>NZ_NPEF01000001.1 Leptospira ellisii strain ATI7-C-A5 contig_1, whole genome shotgun sequence
+>NZ_NPEA01000001.1 Leptospira neocaledonica strain ES4-C-A1 contig_1, whole genome shotgun sequence
+>NZ_NPEI01000001.1 Leptospira haakeii strain ATI7-C-A2 contig_1, whole genome shotgun sequence
+>NZ_BFAY01000001.1 Leptospira johnsonii strain E8, whole genome shotgun sequence
+>NZ_BFAZ01000001.1 Leptospira ellinghausenii strain E18, whole genome shotgun sequence
+>NZ_BFBB01000001.1 Leptospira ryugenii strain YH101, whole genome shotgun sequence
+>NZ_CP026671.1 Leptospira borgpetersenii serovar Ceylonica strain Piyasena chromosome 1, complete sequence
+>NZ_QHCS01000010.1 Leptospira stimsonii strain AMB6-RJ NODE_10_length_98816_cov_62.8229, whole genome shotgun sequence
+>NZ_QHCU01000010.1 Leptospira yasudae strain F1 NODE_10_length_74771_cov_45.8546, whole genome shotgun sequence
+>NZ_CP033614.1 Leptospira kmetyi strain LS 001/16 chromosome 1, complete sequence
+>NZ_RQET01000004.1 Leptospira fletcheri strain SSW15 contig_0001, whole genome shotgun sequence
+>NZ_RQFG01000005.1 Leptospira kanakyensis strain 201800292 contig_0001, whole genome shotgun sequence
+>NZ_RQFU01000005.1 Leptospira yanagawae strain 201800272 contig_0001, whole genome shotgun sequence
+>NZ_RQFP01000004.1 Leptospira brenneri strain 201800277 contig_0001, whole genome shotgun sequence
+>NZ_RQFY01000004.1 Leptospira koniambonensis strain 201800265 contig_0001, whole genome shotgun sequence
+>NZ_RQGA01000003.1 Leptospira perdikensis strain 201702692 contig_0001, whole genome shotgun sequence
+>NZ_RQGF01000028.1 Leptospira sarikeiensis strain 201702455 contig_0001, whole genome shotgun sequence
+>NZ_RQGG01000032.1 Leptospira kemamanensis strain 201702454 contig_0001, whole genome shotgun sequence
+>NZ_RQGV01000005.1 Leptospira selangorensis strain 201702405 contig_0001, whole genome shotgun sequence
+>NZ_RQGR01000029.1 Leptospira jelokensis strain 201702419 contig_0001, whole genome shotgun sequence
+>NZ_RQFO01000004.1 Leptospira montravelensis strain 201800278 contig_0001, whole genome shotgun sequence
+>NZ_RQEP01000005.1 Leptospira semungkisensis strain SSS9 contig_0001, whole genome shotgun sequence
+>NZ_RQEY01000005.1 Leptospira andrefontaineae strain 201800301 contig_0001, whole genome shotgun sequence
+>NZ_RQFW01000005.1 Leptospira bourretii strain 201800267 contig_0001, whole genome shotgun sequence
+>NZ_RQFA01000080.1 Leptospira gomenensis strain 201800299 contig_0001, whole genome shotgun sequence
+>NZ_RQGQ01000004.1 Leptospira congkakensis strain 201702421 contig_0001, whole genome shotgun sequence
+>NZ_RQGW01000003.1 Leptospira meyeri strain 201701676 contig_0001, whole genome shotgun sequence
+>NZ_RQHF01000028.1 Leptospira vanthielii strain 201601955 contig_0001, whole genome shotgun sequence
+>NZ_RQHG01000003.1 Leptospira adleri strain 201601302 NODE_101_covk_35.8831_covr_41.42, whole genome shotgun sequence
+>NZ_RQHO01000002.1 Leptospira levettii strain 201601119 NODE_1_covk_41.2664_covr_81.55_cutoff_47, whole genome shotgun sequence
+>NZ_RQHK01000010.1 Leptospira mtsangambouensis strain 201601298 NODE_103_covk_39.34_covr_59.61, whole genome shotgun sequence
+>NZ_RQHU01000015.1 Leptospira bandrabouensis strain 201601109 NODE_10_covk_23.6208_covr_47.79_44, whole genome shotgun sequence
+>NZ_RQER01000004.1 Leptospira langatensis strain SSW18 contig_0001, whole genome shotgun sequence
+>NZ_RQFD01000003.1 Leptospira bouyouniensis strain 201800295 contig_0001, whole genome shotgun sequence
+>NZ_RQFH01000003.1 Leptospira wolffii strain 201800291 contig_0001, whole genome shotgun sequence
+>NZ_RQGD01000005.1 Leptospira ognonensis strain 201702476 NODE_10_covk_25.5757_covr_49.98_cutoff_5, whole genome shotgun sequence
+>NZ_RQFK01000026.1 Leptospira noumeaensis strain 201800287 contig_0001, whole genome shotgun sequence
+>NZ_RQHS01000005.1 Leptospira dzoumogneensis strain 201601113 contig_0001, whole genome shotgun sequence
+>NZ_RQHW01000078.1 Leptospira idonii strain 201300427 NODE_10_covk_41.921_covr_85.21_cutoff_40, whole genome shotgun sequence
+>NZ_RQHV01000049.1 Leptospira ilyithenensis strain 201400974 NODE_10_covk_43.5709_covr_85.56_cutoff_51, whole genome shotgun sequence
+>NZ_RQEV01000003.1 Leptospira fluminis strain SCS5 contig_0001, whole genome shotgun sequence
+>NZ_CP040840.1 Leptospira weilii strain CUDO6 chromosome I, complete sequence
+>NZ_JAFFPR010000060.1 Leptospira abararensis strain 201903074 contig_0001, whole genome shotgun sequence
+>NZ_JAFFPT010000079.1 Leptospira ainazelensis strain 201903071 contig_0001, whole genome shotgun sequence
+>NZ_JAFFPS010000071.1 Leptospira chreensis strain 201903075 contig_0001, whole genome shotgun sequence
+>NZ_JAFFPU010000075.1 Leptospira ainlahdjerensis strain 201903070 contig_0001, whole genome shotgun sequence

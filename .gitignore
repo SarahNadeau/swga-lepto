@@ -1,3 +1,6 @@
+results/
 swga_results*
 *.fasta
 .idea/
+lepto_species_assemblies/ncbi-genomes-2022-03-09
+*.fasta.gz

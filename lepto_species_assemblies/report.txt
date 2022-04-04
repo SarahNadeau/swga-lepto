@@ -1,0 +1,13 @@
+HistoryId: MCID_6228bafeac6cf923c24a31b9
+QueryKey: 6
+ReleaseType: RefSeq
+FileType: GENOME_FASTA
+Flat: true
+
+Query title: Search Leptospira AND  ( latest[filter] OR "latest refseq"[filter] )  AND "representative genome"[filter] AND all[filter] NOT anomalous[filter]  Sort by: SORTORDER
+Search results count: 67
+Entries to download: 67
+
+GENOME_FASTA files in archive: 67
+Total size (bytes): 82758779
+Total time: 2 minutes 17 seconds
