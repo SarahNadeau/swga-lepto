@@ -1,5 +1,12 @@
 #!/usr/bin/env nextflow
 
+/*
+Run on Aspen with:
+module load nextflow
+export TMPDIR=$HOME/tmp
+export NXF_SINGULARITY_CACHEDIR=/scicomp/scratch/$USER/singularity.cache
+nextflow run -profile singularity,sge dsk.nf --infile <fasta input> --outpath <directory for results>
+*/
 
 /*
 ==============================================================================
