@@ -6,9 +6,9 @@
 # Will evaluate best sets later
 for N_PRIMERS in 20 25 30 35 40; do
   qsub \
-    -N lepto_human_like_nau_${N_PRIMERS}_primers_${MIN_TM}_minTm_${MAX_TM}_maxTm \
+    -N lepto_human_like_nau_${N_PRIMERS}_primers_18_minTm_30_maxTm \
     $HOME/swga-lepto/bash/_run_swga_lepto_human_like_nau.sh $N_PRIMERS 18 30
   qsub \
-    -N lepto_human_like_nau_${N_PRIMERS}_primers_${MIN_TM}_minTm_${MAX_TM}_maxTm \
+    -N lepto_human_like_nau_${N_PRIMERS}_primers_30_minTm_42_maxTm \
     $HOME/swga-lepto/bash/_run_swga_lepto_human_like_nau.sh $N_PRIMERS 30 42
 done
