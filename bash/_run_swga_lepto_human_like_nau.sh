@@ -32,4 +32,5 @@ nextflow run \
   --target_length $TARGET_LEN \
   --max_sets_search 10000 \
   --find_sets_min_size $N_PRIMERS \
-  --find_sets_max_size $N_PRIMERS
+  --find_sets_max_size $N_PRIMERS \
+  --max_dimer_bp 5

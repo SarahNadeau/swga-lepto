@@ -4,7 +4,7 @@
 
 # Run swga to generate primer sets for a variety of set sizes
 # Will evaluate best sets later
-for N_PRIMERS in 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19; do
+for N_PRIMERS in 9; do
   qsub \
     -N lepto_human_like_nau_${N_PRIMERS}_primers_18_minTm_30_maxTm \
     $HOME/swga-lepto/bash/_run_swga_lepto_human_like_nau.sh $N_PRIMERS 18 30
