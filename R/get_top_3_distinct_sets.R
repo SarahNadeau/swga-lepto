@@ -51,6 +51,7 @@ for (file in set_files) {
       writeLines(text = sets$primers[i], con = primers_outfile_con)
       writeLines(text = paste0("set_", sets$X_id[i]), con = set_idx_outfile_con)
       writeLines(text = paste0(outpath, "/target.fasta_export/set_", sets$X_id[i]), con = outfile_con)
+      write.table(x = set, file = paste0(WORKDIR, "/set_to_score_size_", set_size, "_idx_", sets$X_id[i], "_primers.txt"), quote = F, row.names = F, col.names = F)
       top_set <- c(top_set, set)  # next set must be at least half unique compared to all prev sets saved
       n_sets_found <- n_sets_found + 1
     }
