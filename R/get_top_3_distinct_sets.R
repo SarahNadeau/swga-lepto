@@ -1,6 +1,12 @@
+#!/usr/bin/env Rscript
 # This script takes the sets output of the swga program and returns the top 3 high-scoring sets that are at least 50% unique.
 
-WORKDIR <- "swga_results/like_nau_try_2"
+args = commandArgs(trailingOnly=TRUE)
+
+if (length(args)==0) {
+  args[1] <- "swga_results/like_nau_try_2"  # default workdir
+}
+WORKDIR <- args[1]
 
 set_files <- list.files(
   path = WORKDIR,
