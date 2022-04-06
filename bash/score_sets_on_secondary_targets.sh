@@ -4,9 +4,6 @@
 
 WORKDIR=$HOME/swga-lepto/swga_results/like_nau_try_2
 
-export TMPDIR=$HOME/tmp
-export SINGULARITY_CACHEDIR=/scicomp/scratch/$USER/singularity.cache
-
 # Iterate through other Lepto species genomes, score set on each one
 for TARGET_GENOME in $HOME/swga-lepto/lepto_species_assemblies/ncbi-genomes-2022-03-09/*.fna.gz; do
 
