@@ -33,4 +33,5 @@ nextflow run \
   --max_sets_search 10000 \
   --find_sets_min_size $N_PRIMERS \
   --find_sets_max_size $N_PRIMERS \
-  --max_dimer_bp 5
+  --max_dimer_bp 5 \
+  --min_bg_bind_dist 5000
