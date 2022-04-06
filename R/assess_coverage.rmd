@@ -12,53 +12,74 @@ knitr::opts_knit$set(root.dir = '/Users/nadeau/Documents/CDC_ORISE/Projects/swga
 # For Leptospira interrogans
 target_genome_length <- 4885316
 
-# Set these to limit the number of sets to consider by score
-n_top_sets <- 15
-sets_filename <- "sets_top_300_score.txt"
+# # Set these to limit the number of sets to consider by score
+# n_top_sets <- 15
+# sets_filename <- "sets_top_300_score.txt"
 ```
 
 Load bedfile for each primer
 ```{r}
-bed_dir <- paste(
-    "results",
-    "swga_results_lepto_human_fg_bind_rate0.000025_min_tmp_35",
-    "swga/set_bedfiles",
-    "target.fasta_export",
-    sep = "/"
+primer_sites <- read.delim(
+  file = "swga_results/like_nau_try_3/sets_to_score_target_binding_sites.txt",
+  sep = " ",
+  stringsAsFactors = F
 )
-outdir <- paste0(bed_dir, "/../../../")
-set_names <- list.dirs(path = bed_dir, recursive = F, full.names = F)
-
-if (!is.na(n_top_sets)) {
-  set_scores <- read.delim(file = paste(bed_dir, "/../../", sets_filename, sep = ""))
-  set_names <- paste0("set_", head(set_scores$X_id, n_top_sets))
+outdir <- "swga_results/like_nau_try_3"
+get_set_name <- function(set_path) {
+  split_path <- strsplit(x = set_path, split = "/")[[1]]
+  set_name <- split_path[length(split_path)]
+  return(set_name)
 }
-
-is_first <- T
-for (set_name in set_names) {
-
-  primer_bedfiles <- list.files(paste0(bed_dir, "/", set_name, "/"))
-  primer_bedfiles <- primer_bedfiles[primer_bedfiles != "whole_set.bed"]
-
-  for (bedfile in primer_bedfiles) {
-    bed <- read.delim(
-      file = paste0(bed_dir, "/", set_name, "/", bedfile),
-      skip = 1,
-      header = F,
-      col.names = c("ref", "primer_start", "primer_end"),
-      sep = ""
-    )
-    bed$primer_seq <- gsub(x = bedfile, pattern = ".bed", replacement = "")
-    bed$set_name <- set_name
-    if (is_first) {
-      primer_sites <- bed
-      is_first <- F
-    } else {
-      primer_sites <- rbind(primer_sites, bed)
-    }
-  }
-
+get_run_name <- function(set_path) {
+  split_path <- strsplit(x = set_path, split = "/")[[1]]
+  run_name <- split_path[8]
+  return(run_name)
 }
+set_names <- unlist(lapply(X = primer_sites$set_path, FUN = get_set_name))
+run_names <- unlist(lapply(X = primer_sites$set_path, FUN = get_run_name))
+primer_sites$set_name <- set_names
+primer_sites$run_name <- run_names
+
+# bed_dir <- paste(
+#     "results",
+#     "swga_results_lepto_human_fg_bind_rate0.000025_min_tmp_35",
+#     "swga/set_bedfiles",
+#     "target.fasta_export",
+#     sep = "/"
+# )
+# outdir <- paste0(bed_dir, "/../../../")
+# set_names <- list.dirs(path = bed_dir, recursive = F, full.names = F)
+#
+# if (!is.na(n_top_sets)) {
+#   set_scores <- read.delim(file = paste(bed_dir, "/../../", sets_filename, sep = ""))
+#   set_names <- paste0("set_", head(set_scores$X_id, n_top_sets))
+# }
+#
+# is_first <- T
+# for (set_name in set_names) {
+#
+#   primer_bedfiles <- list.files(paste0(bed_dir, "/", set_name, "/"))
+#   primer_bedfiles <- primer_bedfiles[primer_bedfiles != "whole_set.bed"]
+#
+#   for (bedfile in primer_bedfiles) {
+#     bed <- read.delim(
+#       file = paste0(bed_dir, "/", set_name, "/", bedfile),
+#       skip = 1,
+#       header = F,
+#       col.names = c("ref", "primer_start", "primer_end"),
+#       sep = ""
+#     )
+#     bed$primer_seq <- gsub(x = bedfile, pattern = ".bed", replacement = "")
+#     bed$set_name <- set_name
+#     if (is_first) {
+#       primer_sites <- bed
+#       is_first <- F
+#     } else {
+#       primer_sites <- rbind(primer_sites, bed)
+#     }
+#   }
+#
+# }
 ```
 
 Load MLST info from target genome
@@ -95,7 +116,7 @@ for (i in 1:nrow(mlst_info)) {
   midpoint <- mlst_info[[i, "loci_midpoint"]]
   min_dists_to_midpoint <- primer_sites %>%
           mutate(dist_to_midpoint = midpoint - primer_start) %>%
-          group_by(set_name) %>%
+          group_by(run_name, set_name) %>%
           filter(dist_to_midpoint >= 0) %>%
           summarise(min_dist_to_locus_midpoint = min(dist_to_midpoint)) %>%
           mutate(Locus = locus, Allele = allele)
@@ -117,25 +138,27 @@ dist_to_mlst_loci_with_scheme <- merge(
 )
 
 set_mlst_coverage <- dist_to_mlst_loci_with_scheme %>%
-        group_by(set_name, mlst_scheme) %>%
+        group_by(run_name, set_name, mlst_scheme) %>%
         summarise(coverage_at_5000 = sum(min_dist_to_locus_midpoint <= 5000) / n(),
-                  coverage_at_10000 = sum(min_dist_to_locus_midpoint <= 10000) / n()) %>%
+                  coverage_at_10000 = sum(min_dist_to_locus_midpoint <= 10000) / n(),
+                  .groups = "drop") %>%
         arrange(set_name, mlst_scheme)
 set_mlst_coverage_scores <- set_mlst_coverage %>%
-        group_by(set_name) %>%
+        group_by(run_name, set_name) %>%
         summarise(
-                set_score = 0.75 * coverage_at_5000 + 0.25 * coverage_at_10000,
-                score_function = "sum_{mlst schemes}{0.75 * frac_loci_covered_assuming_5000bp_extension + 0.25 * frac_loci_covered_assuming_10000bp_extension}") %>%
+                set_score = mean(0.75 * coverage_at_5000 + 0.25 * coverage_at_10000),
+                score_function = "avg_{mlst schemes}{0.75 * frac_loci_covered_assuming_5000bp_extension + 0.25 * frac_loci_covered_assuming_10000bp_extension}",
+                .groups = "drop") %>%
         arrange(desc(set_score))
 
 write.table(
         x = set_mlst_coverage,
-        file = paste(outdir, "mlst_loci_coverage/set_mlst_coverage.txt", sep = "/"),
+        file = paste(outdir, "set_mlst_coverage.txt", sep = "/"),
         row.names = F
 )
 write.table(
         x = set_mlst_coverage_scores,
-        file = paste(outdir, "mlst_loci_coverage/set_mlst_coverage_scores.txt", sep = "/"),
+        file = paste(outdir, "set_mlst_coverage_scores.txt", sep = "/"),
         row.names = F
 )
 ```
@@ -144,7 +167,7 @@ Calculate coverage of whole genome
 *approximate, I'm ignoring the last gap at the end of the genome
 ```{r}
 primer_sites_with_gap_lengths <- primer_sites %>%
-        group_by(set_name) %>%
+        group_by(run_name, set_name) %>%
         arrange(set_name, primer_start) %>%
         mutate(
                 primer_gap_length = primer_start - dplyr::lag(primer_end, n = 1, default = 0),
@@ -156,7 +179,7 @@ primer_sites_with_gap_lengths$gap_at_5000[primer_sites_with_gap_lengths$gap_at_5
 primer_sites_with_gap_lengths$gap_at_10000[primer_sites_with_gap_lengths$gap_at_10000 < 0] <- 0
 
 genome_coverage_by_set <- primer_sites_with_gap_lengths %>%
-        group_by(set_name) %>%
+        group_by(run_name, set_name) %>%
         summarise(
                 last_primer_end = max(primer_end),
                 coverage_at_5000_to_last_primer_end = (max(primer_end) - sum(gap_at_5000)) / max(primer_end),
@@ -165,7 +188,7 @@ genome_coverage_by_set <- primer_sites_with_gap_lengths %>%
 
 write.table(
         x = genome_coverage_by_set,
-        file = paste(outdir, "genome_coverage/genome_coverage_by_set.txt", sep = "/"),
+        file = paste(outdir, "genome_coverage_by_set.txt", sep = "/"),
         row.names = F
 )
 ```
