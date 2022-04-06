@@ -5,7 +5,7 @@
 WORKDIR=$1
 
 # Iterate through other Lepto species genomes, score set on each one
-for TARGET_GENOME in $HOME/swga-lepto/lepto_species_assemblies/ncbi-genomes-2022-03-09/*.fna.gz; do
+for TARGET_GENOME in $HOME/swga-lepto/lepto_species_assemblies/ncbi-genomes-2022-03-09/GCF_004769575.1_ASM476957v1_genomic.fna.gz; do
 
   # Submit job
   qsub \
