@@ -10,34 +10,57 @@ require(ggplot2)
 ```
 Load data
 ```{r}
-run <- "swga_results_lepto_human_fg_bind_rate0.000025_min_tmp_35"
-sets_file <- "sets_top_300_score.txt"
-set <- "set_38"
+workdir <- "swga_results/like_nau_try_2/"
 set_score_files <- list.files(
-  path = paste("results", run, "genus_coverage", set, sep = "/"),
-  pattern = "set_score_",
-  full.names = T
+        path = paste(workdir, "secondary_target_genome_results", sep = "/"),
+        full.names = T
 )
-
-bg_dist_mean <- unlist(read.delim(file = paste("results", run, "swga", sets_file, sep = "/")) %>%
-        filter(X_id == as.integer(gsub(x = set, pattern = "set_", replacement = ""))) %>%
-        select(bg_dist_mean))
+# run <- "swga_results_lepto_human_fg_bind_rate0.000025_min_tmp_35"
+# sets_file <- "sets_top_300_score.txt"
+# set <- "set_38"
+# set_score_files <- list.files(
+#   path = paste("swga_results", run, "genus_coverage", set, sep = "/"),
+#   pattern = "set_score_",
+#   full.names = T
+# )
+#
+# bg_dist_mean <- unlist(read.delim(file = paste("results", run, "swga", sets_file, sep = "/")) %>%
+#         filter(X_id == as.integer(gsub(x = set, pattern = "set_", replacement = ""))) %>%
+#         select(bg_dist_mean))
 
 is_first <- T
-for (file in set_score_files) {
-  split_file_path <- strsplit(x = file, split = "/")[[1]]
+for (filepath in set_score_files) {
+  split_file_path <- strsplit(x = filepath, split = "/")[[1]]
   file_name <- split_file_path[length(split_file_path)]
-  file_name <- gsub(x = file_name, pattern = "set_score_", replacement = "")
-  file_name <- gsub(x = file_name, pattern = ".txt", replacement = "")
-  set_score_data_tmp <- read.delim(file = file) %>%
+  file_name_split <- strsplit(file_name, split = "__")[[1]]
+  fg_file_name <- gsub(x = file_name_split[2], pattern = ".txt", replacement = "")
+  set_score_data_tmp <- tryCatch(
+    {
+          read.delim(file = filepath) %>%
           select(starts_with("fg_")) %>%
-          mutate(file = file_name)
+          mutate(file = fg_file_name, primer_set = file_name_split[1], filepath = filepath)
+    }, error = function(e) {
+          set_score_data_tmp <- data.frame(
+                  fg_max_dist = NA, fg_dist_mean = NA, fg_dist_std = NA, fg_dist_gini = NA) %>%
+                  mutate(file = fg_file_name, primer_set = file_name_split[1], filepath = filepath)
+          return(set_score_data_tmp)
+    }
+  )
+  if (nrow(set_score_data_tmp) == 0) {
+    set_score_data_tmp <- data.frame(
+            fg_max_dist = NA, fg_dist_mean = NA, fg_dist_std = NA, fg_dist_gini = NA) %>%
+            mutate(file = fg_file_name, primer_set = file_name_split[1], filepath = filepath)
+  }
   if (is_first) {
     set_score_data <- set_score_data_tmp
     is_first <- F
   } else {
     set_score_data <- rbind(set_score_data, set_score_data_tmp)
   }
+}
+
+if (!(length(set_score_files) == nrow(set_score_data))) {
+  stop("Didn't load all set score files correctly")
 }
 
 # Add species based on file name to species mapping prev generated in check_species.rmd
@@ -60,27 +83,58 @@ set_score_data_w_species <- merge(
         all = T
 )
 ```
-Plot primer binding statistics
+Rank primer sets based on secondary target genome coverage
 ```{r}
+# Mean and standard deviation distance between primer binding sites well-correlated, can take mean as quality inficator
+ggplot(
+        data = set_score_data_w_species,
+        aes(x = fg_dist_mean, y = fg_dist_std)
+) + geom_point()
+
+secondary_target_coverage <- set_score_data_w_species %>%
+  group_by(primer_set) %>%
+  summarise(mean_fg_dist_mean = round(mean(fg_dist_mean, na.rm = T)),
+            number_species_na_run_failure = sum(is.na(fg_dist_mean))) %>%
+  arrange(mean_fg_dist_mean)
+
+write.table(
+        x = secondary_target_coverage,
+        file = paste(workdir, "secondary_target_genome_coverage.txt", sep = "/"),
+        row.names = F
+)
+```
+
+Plot primer binding statistics for a particular set
+```{r}
+primer_set_of_interest <- "set_to_score_size_40_idx_7340"
+
 # Put species in coverage order
-set_score_data_w_species <- set_score_data_w_species %>%
+set_score_data_w_species_filtered <- set_score_data_w_species %>%
+        filter(primer_set == primer_set_of_interest) %>%
         arrange(desc(fg_dist_mean)) %>%
         mutate(order = factor(x = 1:n(), labels = species))
 
 ggplot(
-        data = set_score_data_w_species,
+        data = set_score_data_w_species_filtered,
         aes(x = order, y = fg_dist_mean)) +
         geom_col() +
         geom_errorbar(aes(ymin = fg_dist_mean, ymax = fg_dist_mean + fg_dist_std)) +
         # geom_hline(aes(yintercept = bg_dist_mean), linetype = "dashed", color = "red") +
         theme_bw() +
         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+        ggtitle(primer_set_of_interest) +
         labs(x = element_blank(), y = "Distance between binding sites")
 
 ggsave(
-        filename = paste("results", run, "genus_coverage", set, "genus_coverage.png", sep = "/"),
+        filename = paste0(workdir, "/genus_coverage_", primer_set_of_interest, ".png"),
         width = 6.5,
         height = 4,
         units = "in"
 )
+# ggsave(
+#         filename = paste("results", run, "genus_coverage", set, "genus_coverage.png", sep = "/"),
+#         width = 6.5,
+#         height = 4,
+#         units = "in"
+# )
 ```

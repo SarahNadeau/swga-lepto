@@ -1,0 +1,27 @@
+---
+title: "Get ratio of binding sites in target:background genome for a set"
+output: html_notebook
+---
+
+Load primer information produced by swga
+```{r}
+# primer_info <- read.delim(
+#   file = "swga_results/like_nau_try_3/lepto_human_like_nau_8_primers_18_minTm_30_maxTm/swga/primers_all.txt",
+#   stringsAsFactors = F
+# )
+# primers_in_set <- c('AATATTCG','AATTATCG','ATAAATCG','ATTAATCG','TAATCGTA','TATCGTAA','TATTATCG','TCGTTATA')
+primer_info <- read.delim(
+  file = "swga_results/like_nau_try_2/lepto_human_like_nau_40_primers_18_minTm_30_maxTm/swga/primers_all.txt",
+  stringsAsFactors = F
+)
+primers_in_set <- c('AAAGTAATCG','AATCGAAATA','AATCGTAAAT','AGTAAAATCG','ATAGAAATCG','ATCGTAAAAG','ATCTAAAACG','ATTCGTAAAG','ATTCGTAAAT','CATAAAATCG','CGAAAAAAATA','CGAAAAAATC','CGTAAAAAAC','CGTAAAAATC','CGTAATCG','CGTATAACG','CGTCTAAAAT','CTAAAATCGT','GAAATCGTAA','GATAAAATCG','GATCGTAAC','GTAAAAAACG','GTAAAAATCG','TAAAAAAATCG','TAAAATCGTAA','TAAAGAATCG','TAAATCGTAT','TATCGAAAAA','TATCGTAAAA','TATCGTCG','TATGGATCG','TCGTAAAAAA','TCGTAAAATC','TCGTAAAATT','TCGTAACG','TCGTATCG','TTAGAAATCG','TTCTAAATCG','TTTAGAATCG','TTTCGTAATA')
+target_genome_length <- 4885316
+background_genome_length <- 3298912062
+```
+Sum binding freq in target and background for set
+```{r}
+primer_info %>%
+  filter(seq %in% primers_in_set) %>%
+  summarise(tg_bind_sites = sum(fg_freq), bg_bind_sites = sum(bg_freq)) %>%
+  mutate(bias_ratio = (tg_bind_sites / target_genome_length) / (bg_bind_sites / background_genome_length))
+```

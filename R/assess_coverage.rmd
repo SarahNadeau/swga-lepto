@@ -81,7 +81,6 @@ primer_sites$run_name <- run_names
 #
 # }
 ```
-
 Load MLST info from target genome
 ```{r}
 scheme_1 <- c("glmU1", "pntA1", "sucA1", "tpiA1", "pfkB1", "mreA1", "caiB1")

@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-# This script takes the sets output of the swga program and returns the top 3 high-scoring sets that are at least 50% unique.
+# This script takes the sets output of the swga program and returns the top 3 high-scoring sets that are at least 30% unique.
 
 args = commandArgs(trailingOnly=TRUE)
 
