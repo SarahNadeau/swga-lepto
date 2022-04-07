@@ -1,0 +1,12 @@
+"primer_set" "mean_fg_dist_mean" "number_species_na_run_failure"
+"set_to_score_size_40_idx_7340" 3728 0
+"set_to_score_size_35_idx_8743" 4987 0
+"set_to_score_size_30_idx_3852" 5299 0
+"set_to_score_size_35_idx_6449" 5987 0
+"set_to_score_size_30_idx_9374" 6165 0
+"set_to_score_size_25_idx_5905" 6264 0
+"set_to_score_size_25_idx_3066" 6321 0
+"set_to_score_size_25_idx_6309" 6824 0
+"set_to_score_size_20_idx_2315" 11322 0
+"set_to_score_size_20_idx_609" 11924 0
+"set_to_score_size_20_idx_1074" 13728 0

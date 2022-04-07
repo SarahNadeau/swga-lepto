@@ -1,0 +1,13 @@
+"run_name" "set_name" "last_primer_end" "coverage_at_5000_to_last_primer_end" "coverage_at_10000_to_last_primer_end"
+"lepto_human_like_nau_8_primers_18_minTm_30_maxTm" "set_9868" 4367021 0.886781629857058 0.988432847014017
+"lepto_human_like_nau_8_primers_18_minTm_30_maxTm" "set_9841" 4367021 0.873530491380738 0.982016573769625
+"lepto_human_like_nau_8_primers_18_minTm_30_maxTm" "set_6483" 4367021 0.871389901720189 0.977150556409049
+"lepto_human_like_nau_7_primers_18_minTm_30_maxTm" "set_1161" 4367021 0.822960778068161 0.96680551799499
+"lepto_human_like_nau_7_primers_18_minTm_30_maxTm" "set_4175" 4367021 0.822156110538511 0.96673361543258
+"lepto_human_like_nau_7_primers_18_minTm_30_maxTm" "set_828" 4367021 0.817986448885865 0.965259612903167
+"lepto_human_like_nau_6_primers_18_minTm_30_maxTm" "set_3925" 4367021 0.797995017656201 0.954033653605055
+"lepto_human_like_nau_6_primers_18_minTm_30_maxTm" "set_1345" 4367021 0.791836357095604 0.953220742469523
+"lepto_human_like_nau_5_primers_18_minTm_30_maxTm" "set_7974" 4367021 0.790987036700762 0.94788735845328
+"lepto_human_like_nau_5_primers_18_minTm_30_maxTm" "set_6543" 4367021 0.777861842203186 0.939743820787672
+"lepto_human_like_nau_6_primers_18_minTm_30_maxTm" "set_1235" 4367021 0.777626670446513 0.947223977168876
+"lepto_human_like_nau_5_primers_18_minTm_30_maxTm" "set_6529" 4366517 0.755687656775412 0.935937040895524

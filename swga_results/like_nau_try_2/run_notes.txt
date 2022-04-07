@@ -1,0 +1,11 @@
+Used swga-lepto script run_swga_lepto_human_like_nau.sh at commit 72bd58 and wf-swga at commit e77d800 to generate primers.
+
+Low temp runs don't find any sets, possibly because not enough primers to search amongst. See like_nau_try_3 for follow-up analysis.
+
+Used script score_sets_on_secondary_targets.sh to get primer binding sites on other lepto species genomes. A few runs seemingly failed (empty set score output files) but upon re-running the script the output was normal.
+
+Double-checked primer melting temperatures for selected primer set using IDT's OligoAnalyzer tool online with settings used by Mark Itsko from DBD:
+[Oligos] = 4 uM
+[dNTPs] = 4 mM
+[Na+] = 50 mM
+[Mg2+] = 10 mM

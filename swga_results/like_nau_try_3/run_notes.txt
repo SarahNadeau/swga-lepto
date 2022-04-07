@@ -1,0 +1,11 @@
+Used swga-lepto script run_swga_lepto_human_like_nau.sh at commit ecca403f and wf-swga at commit e77d800 to generate primers.
+
+Used script score_sets_on_secondary_targets.sh to get primer binding sites on other lepto species genomes. A few runs seemingly failed (empty set score output files) but upon re-running the script the output was normal.
+
+We only get primer sets for set sizes <=8 at this lower temp range because there are a small number of candidate primers with sufficient melting temp and evenness in the target genome, plus the limiting factor is min_bg_bind_dist (minimum average distance between primer binding sites in the background human genome), possibly in combination with max_dimer_bp (the maximum number of consecutive complementary base pairs between any 2 primers in a set). I tried running swga with primer set size 9 and max_dimer_bp relaxed from default 3 to 5 --> still no sets found. Then I additionally relaxed min_bg_bind_dist from default 30000 to 5000 --> got out sets. Thus these are the limiting factors why we only want to use a set of size 8. 
+
+Double-checked primer melting temperatures for selected primer set using IDT's OligoAnalyzer tool online with settings used by Mark Itsko from DBD:
+[Oligos] = 4 uM
+[dNTPs] = 4 mM
+[Na+] = 50 mM
+[Mg2+] = 10 mM
